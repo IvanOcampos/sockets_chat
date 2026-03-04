@@ -23,13 +23,28 @@ def handle_messages(client):
     while True:
         try:
             message = client.recv(1024)
-            broadcast(message, client)
-        except:
+            
+            if not message:
+                raise Exception("Cliente desconectado")
+            
             index = clients.index(client)
             username = usernames[index]
+            
+            print(f"[MSG] {message.decode('utf-8')}")
+            
+            broadcast(message, client)
+            
+        except Exception as e:
+            index = clients.index(client)
+            username = usernames[index]
+            
+            print(f"[-] {username} disconnected")
+            
             broadcast(f"ChatBot: {username} disconnected".encode("utf-8"), client)
+            
             clients.remove(client)
             usernames.remove(username)
+            
             client.close()
             break
         
@@ -43,11 +58,11 @@ def receive_connections():
         clients.append(client)
         usernames.append(username)
         
-        print(f"{username} is connected with {str(addres)}")
+        print(f"[+] {username} connected from {str(addres)}")
         
         message = f"ChatBot: {username} joined the chat!".encode("utf-8")
         broadcast(message, client)
-        client.send("Connected to sercer".encode("utf-8"))
+        client.send("Connected to server".encode("utf-8"))
     
         #Hilos
         thread = threading.Thread(target=handle_messages, args=(client,))
