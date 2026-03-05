@@ -74,7 +74,7 @@ def receive_connections():
     """
     while True:
         try:
-            client, addres = server.accept() 
+            client, address = server.accept() 
         
             #Handshake: ask for username
             client.send("@username".encode("utf-8"))
@@ -84,7 +84,7 @@ def receive_connections():
             clients.append(client)
             usernames.append(username)
             
-            print(f"[+] {username} connected from {(addres)}")
+            print(f"[+] {username} connected from {(address)}")
             
             #Welcome message to others
             message = f"ChatBot: {username} joined the chat!".encode("utf-8")
