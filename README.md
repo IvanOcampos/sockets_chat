@@ -43,11 +43,8 @@ You will see output like:
 ### How it works
 
 1. **Username prompt**: Asks the user for a username at the start.
-
 2. **Connection loop**: Tries to connect to the server. If unavailable, retries every 5 seconds.
-
 3. **Message receiving**: Continuously listens for messages from the server. Automatically handles server disconnections.
-
 4. **Message sending**: User inputs messages, which are sent to the server and broadcast to others.
 
 ### Usage
